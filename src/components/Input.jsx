@@ -10,6 +10,8 @@ const getInputType = (data) => {
     case "date":
     case "time":
     case "tel":
+    case "number":
+    case "password":
       type = "text";
       break;
     default:

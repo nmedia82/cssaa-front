@@ -1,6 +1,10 @@
 import http from "./http";
 const backend_url = "http://172.16.10.5:3000";
 
+export function doLogin(data) {
+  return http.post(`${backend_url}/login`, data);
+}
+
 export function getAll() {
   return http.get(`${backend_url}/emps`);
 }

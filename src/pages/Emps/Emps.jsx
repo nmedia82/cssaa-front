@@ -9,7 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 class Emps extends React.Component {
   state = {
     emps: [],
-    data: { FULLNAME: {}, EMAIL: {}, PHONE: {}, ROLE_ID: {} },
+    data: { FULLNAME: {}, EMAIL: {}, PHONE: {}, ROLE_ID: {}, PWD: {} },
     viewMode: "view",
     fields: [
       {
@@ -34,6 +34,12 @@ class Emps extends React.Component {
         label: "Role",
         type: "select",
         id: "ROLE_ID",
+        value: "",
+      },
+      {
+        label: "Password",
+        type: "text",
+        id: "PWD",
         value: "",
       },
     ],
@@ -72,7 +78,7 @@ class Emps extends React.Component {
     const data = { ...this.state.data };
     data[input.id] = value;
     // let fields = this.state.fields.map((s) => (s = { ...s, value: value }));
-    // console.log(value, data);
+    console.log(value, data);
     this.setState({ data });
   };
 
