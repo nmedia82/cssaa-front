@@ -39,17 +39,19 @@ function Login() {
   };
 
   const handleLogin = async () => {
-    const result = await doLogin(data);
-    const { status, user, token } = result.data;
-    console.log(result);
-    if (status) {
+    try {
+      const result = await doLogin(data);
+      const { user, token } = result.data;
+      console.log(result);
       setUser(user);
       setToken(token);
       toast.success(`Login Successful...`);
 
       navigate("/", { replace: true });
-    } else {
-      toast.error(`Error in login, try again.`);
+    } catch (err) {
+      if (err.response && err.response.status === 400) {
+        toast.error("Server error: " + err.response.data);
+      }
     }
   };
 

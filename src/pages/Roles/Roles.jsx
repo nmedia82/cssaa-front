@@ -21,9 +21,15 @@ class Roles extends React.Component {
   };
 
   async componentDidMount() {
-    let roles = await getAll();
-    roles = roles.data.rows;
-    this.setState({ roles });
+    try {
+      let roles = await getAll();
+      roles = roles.data.rows;
+      this.setState({ roles });
+    } catch (err) {
+      if (err.response && err.response.status === 401) {
+        toast.error(err.response.data);
+      }
+    }
   }
 
   refreshData = async () => {

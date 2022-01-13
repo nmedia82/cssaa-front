@@ -1,29 +1,21 @@
 import axios from "axios";
+import logger from "./logService";
+import { getToken, getId } from "./cache";
 
-axios.interceptors.request.use(
-  function (request) {
-    // request.headers.common["Content-Type"] = "text/plain";
-    request.headers.common["Content-Type"] =
-      "application/x-www-form-urlencoded; charset=UTF-8;application/json";
-    // request.headers.common["Accept"] = "text/plain";
-    // request.headers.common["Accept"] =
-    //   "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-    // request.headers.common['Authorization'] = '***';
-    return request;
-  },
-  function (error) {
-    return Promise.reject(error);
-  }
-);
+axios.defaults.headers.common["Content-Type"] =
+  "application/x-www-form-urlencoded; charset=UTF-8;application/json";
+axios.defaults.headers.common["x-auth-token"] = getToken();
+axios.defaults.headers.common["x-auth-userid"] = getId();
 
 axios.interceptors.response.use(null, (error) => {
-  console.log("Error in request", error);
+  // console.log("Error in request", error);
   const expectedErrors =
     error.response &&
     error.response.status >= 400 &&
     error.response.status < 500;
 
   if (!expectedErrors) {
+    logger.log(error);
     alert("An unexpected error occurred!");
   }
   return Promise.reject(error);
